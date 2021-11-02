@@ -5,6 +5,7 @@ import ProductForm from "./ProductForm"
 import firebaseDb from "../firebase";
 import { getAuth, signOut } from 'firebase/auth'
 import { useAuthState } from "../firebase"
+import NumberFormat from "react-number-format";
 
 const Products = () => {
 
@@ -89,7 +90,18 @@ const Products = () => {
                                     return <tr key={id}>
                                         <td>{productObjects[id].name}</td>
                                         <td>{productObjects[id].id}</td>
-                                        <td>{productObjects[id].total}</td>
+                                        <td>
+                                            <NumberFormat 
+                                            thousandsGroupStyle="thousand"
+                                            value={productObjects[id].total}
+                                            prefix="@"
+                                            decimalSeparator="."
+                                            displayType="text"
+                                            type="text"
+                                            thousandSeparator={true}
+                                            allowNegative={true}
+                                            />
+                                        </td>
                                         <td>
                                             <a className="btn text-primary" onClick={() => { setCurrentId(id) }}>
                                                 <i className="fas fa-pencil-alt"></i>

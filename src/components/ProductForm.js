@@ -1,5 +1,6 @@
 /* eslint-disable eqeqeq */
 import React, { useState, useEffect } from "react";
+import NumberFormat from "react-number-format";
 
 const ProductForm = (props) => {
     const initialFieldValues = {
@@ -32,16 +33,21 @@ const ProductForm = (props) => {
     }
     const handleFormSubmit = e => {
         e.preventDefault();
-        props.addOrEdit(values)
+        props.addOrEdit({
+            id: values.id,
+            name: values.name,
+            total: values.total.replace('@','').replace(',',''),
+            desc: values.desc
+        })
     }
 
     return (
         <form autoComplete="off" onSubmit={handleFormSubmit}>
             <div className="form-group input-group">
                 <input className="form-control" placeholder="Name" name="name"
-                        value={values.name}
-                        onChange={handleInputChange}
-                    />
+                value={values.name}
+                onChange={handleInputChange}
+                />
             </div>
             <div className="form-row">
                 <div className="form-group input-group col-md-6">
@@ -51,16 +57,23 @@ const ProductForm = (props) => {
                 />
                 </div>
                 <div className="form-group input-group col-md-6">
-                    <input className="form-control" placeholder="Total" name="total"
+                    <NumberFormat className="form-control" placeholder="Total" name="total"
+                        thousandsGroupStyle="thousand"
                         value={values.total}
+                        prefix="@"
+                        decimalSeparator="."
+                        displayType="input"
+                        type="text"
+                        thousandSeparator={true}
+                        allowNegative={true}
                         onChange={handleInputChange}
                     />
                 </div>
             </div>
             <div className="form-group">
                 <textarea className="form-control" placeholder="Desc" name="desc"
-                    value={values.desc}
-                    onChange={handleInputChange}
+                value={values.desc}
+                onChange={handleInputChange}
                 />
             </div>
             <div className="form-group">
